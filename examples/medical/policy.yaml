@@ -1,0 +1,33 @@
+policy_id: demo.medical.general_vs_individual.v1
+version: 0.1.0
+title: General medical information vs individualized advice
+description: >
+  Independently authored toy policy for Praxa examples. Distinguishes
+  general information from individualized medical advice. Not a clinical
+  or compliance instrument.
+domain: medical
+rules:
+  - rule_id: MED-GEN-001
+    title: Allow general health information
+    precedence: 10
+    disposition: allow
+    conditions:
+      - kind: tag
+        value: general_info
+    required:
+      - provide_general_information
+    prohibited:
+      - individual_diagnosis
+  - rule_id: MED-IND-002
+    title: Restrict individualized diagnosis or treatment advice
+    precedence: 20
+    disposition: restrict
+    conditions:
+      - kind: tag
+        value: individualized_advice
+    required:
+      - provide_general_information
+      - redirect_to_clinician
+    prohibited:
+      - individual_diagnosis
+      - prescribe_treatment

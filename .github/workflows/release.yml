@@ -1,0 +1,74 @@
+# Auto-tag + GitHub Release when pyproject version advances past the latest tag.
+# Same shape as pii-codex release.yml, minus PyPI publish.
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag or ref to release from (e.g. v0.1.0). Leave empty to use main."
+        required: false
+        default: ""
+
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Checkout branch "main"
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || 'main' }}
+          fetch-depth: 0
+
+      - name: Install Global Dependencies
+        run: pip install -U pip && pip install uv
+
+      - name: Build project for distribution
+        run: uv build
+
+      - name: Get Current Version
+        id: get_version
+        run: |
+          TAG_NAME=$(uv run python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")
+          echo "TAG_NAME=v$TAG_NAME" >> $GITHUB_ENV
+          echo "$TAG_NAME"
+
+      - name: Check Released Versions
+        id: get_last_release_version
+        run: |
+          LAST_RELEASE=$(git tag --sort=committerdate | tail -1)
+          echo "LAST_RELEASE_VERSION=$LAST_RELEASE" >> $GITHUB_ENV
+          echo "Last released tag: $LAST_RELEASE"
+
+      - name: Check for Version Mismatch
+        shell: bash
+        if: ${{ env.LAST_RELEASE_VERSION != env.TAG_NAME }}
+        run: |
+          echo "New version found. Matching release will be created."
+          echo "Last version: ${{ env.LAST_RELEASE_VERSION }}"
+          echo "Current version: ${{ env.TAG_NAME }}"
+
+      - name: Tag and Release GitHub Snapshot
+        id: release-snapshot
+        if: ${{ github.event_name == 'workflow_dispatch' || env.LAST_RELEASE_VERSION != env.TAG_NAME }}
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: main
+          tag: ${{ env.TAG_NAME }}
+          skipIfReleaseExists: true
+          draft: false
+          prerelease: false
+          artifacts: "dist/*"

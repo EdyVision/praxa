@@ -1,0 +1,33 @@
+policy_id: demo.government.public_info_vs_case_advice.v1
+version: 0.1.0
+title: Public civic information vs individualized case advice
+description: >
+  Independently authored toy policy for Praxa examples. Distinguishes
+  general CityGov public information from individualized case handling.
+  Not a compliance instrument.
+domain: government
+rules:
+  - rule_id: GOV-PUB-001
+    title: Allow general public information
+    precedence: 10
+    disposition: allow
+    conditions:
+      - kind: tag
+        value: public_info
+    required:
+      - provide_public_information
+    prohibited:
+      - case_specific_advice
+  - rule_id: GOV-CASE-002
+    title: Restrict individualized case advice
+    precedence: 20
+    disposition: restrict
+    conditions:
+      - kind: tag
+        value: case_advice
+    required:
+      - provide_public_information
+      - redirect_to_agency
+    prohibited:
+      - case_specific_advice
+      - guarantee_outcome

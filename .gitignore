@@ -1,0 +1,37 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Coverage / test artifacts
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.pytest_cache/
+
+# Local MLflow
+mlruns/
+
+# Local run outputs and notebooks (not part of the public library)
+artifacts/
+*.ipynb
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Local secrets
+.env
+.env.*
+
+# Local smoke scripts that hit private endpoints / sibling repos
+examples/compass_import_smoke.py

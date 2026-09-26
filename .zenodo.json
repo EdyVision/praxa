@@ -1,0 +1,28 @@
+{
+  "title": "Praxa: Declarative Policy Representation and Operationalization for Language Models",
+  "description": "Research library for declarative policies: representation, recognition, disposition, operationalizers, and a light evaluation harness for language-model methods.",
+  "upload_type": "software",
+  "license": "MIT",
+  "creators": [
+    {
+      "name": "Rosado, Eidan J."
+    }
+  ],
+  "keywords": [
+    "policy",
+    "alignment",
+    "language-models",
+    "operationalization",
+    "evaluation"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/EdyVision/praxa",
+      "relation": "isSupplementTo",
+      "resource_type": "software",
+      "scheme": "url"
+    }
+  ],
+  "version": "0.2.0",
+  "access_right": "open"
+}

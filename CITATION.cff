@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata from this file."
+type: software
+title: "Praxa: Declarative Policy Representation and Operationalization for Language Models"
+version: 0.2.0
+date-released: "2026-09-25"
+license: MIT
+repository-code: "https://github.com/EdyVision/praxa"
+url: "https://github.com/EdyVision/praxa"
+authors:
+  - family-names: Rosado
+    given-names: "Eidan J."
+    email: eidan@eidanrosado.com
+keywords:
+  - policy
+  - alignment
+  - language-models
+  - operationalization
+  - evaluation
+abstract: >-
+  Praxa is a research library for declarative policies: how they are represented,
+  matched, decided, and operationalized by language-model methods. It provides a
+  typed policy schema, recognition and disposition services, swappable
+  operationalizers, and a light evaluation harness so methods can be compared
+  without rewriting the policy object.

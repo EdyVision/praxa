@@ -1,0 +1,84 @@
+[project]
+name = "praxa"
+version = "0.2.0"
+description = "Research library for declarative policy representation and operationalization for language models."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Eidan J. Rosado", email = "eidan@eidanrosado.com" },
+]
+keywords = [
+    "policy",
+    "alignment",
+    "language-models",
+    "operationalization",
+    "evaluation",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
+]
+dependencies = [
+    "pydantic>=2.7",
+    "pyyaml>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/EdyVision/praxa"
+Repository = "https://github.com/EdyVision/praxa"
+Issues = "https://github.com/EdyVision/praxa/issues"
+Releases = "https://github.com/EdyVision/praxa/releases"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "coverage[toml]>=7.0",
+    "black>=24.0",
+]
+mlflow = [
+    "mlflow>=2.14",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["praxa"]
+branch = true
+omit = [
+    "*/tests/*",
+    "*/__pycache__/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 85
+omit = [
+    "*/tests/*",
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+extend-exclude = """
+/(
+  \\.venv
+  | dist
+  | build
+  | artifacts
+)/
+"""
